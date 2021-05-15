@@ -1,8 +1,7 @@
 Bootstrap: docker
-From: provarepro/openvino:2019_cpu_deps
+From: provarepro/openvino:2019_c_deps-ubuntu18
 
 %post
-
     git clone \
         --depth 1 \
         --single-branch \
