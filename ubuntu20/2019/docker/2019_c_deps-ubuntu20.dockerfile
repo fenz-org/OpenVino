@@ -9,6 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
     LC_ALL=C.UTF-8 \
     LANG=C.UTF-8 \
     LANGUAGE=C.UTF-8 \
+    OPENCV_VERSION="4.3.0" \
     PYTHON_VERSION="3.8"
 
 RUN apt-get update && \
