@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=provarepro/openvino:2019_c_deps-ubuntu18
+ARG BASE_IMAGE=provarepro/openvino:2019_cg_deps-ubuntu18
 FROM ${BASE_IMAGE}
 
 USER root
@@ -28,7 +28,7 @@ RUN git clone \
         -DENABLE_VALIDATION_SET=OFF \
         -DENABLE_TESTS=OFF \
         -DENABLE_GNA=OFF \
-        -DENABLE_CLDNN=OFF \
+        -DENABLE_CLDNN=ON \
         -DENABLE_MKL_DNN=ON \
         -DENABLE_OPENCV=OFF \
         .. && \
