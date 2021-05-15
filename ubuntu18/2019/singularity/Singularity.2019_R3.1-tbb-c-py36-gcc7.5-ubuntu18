@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: provarepro/openvino:openvino:2019_c_deps-ubuntu18
+From: provarepro/openvino:2019_c_deps-ubuntu18
 
 %post
     git clone \
