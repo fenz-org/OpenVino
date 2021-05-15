@@ -1,0 +1,53 @@
+if: |
+  commit_message =~ /^Build.*:/
+
+os: linux
+
+dist: xenial
+
+language: shell
+
+git:
+  depth: 2
+
+services:
+  - docker
+
+env:
+  global:
+    - DOCKER_ORG=provarepro
+    - DOCKER_USER=reprova
+    # DOCKER_PASS="..."
+    - secure: "dmSfEyWxamnHZvrTjdpyjUbksUSl3JzEtqxbuaRGscAnZuXsBbHWX2sde2X4GU/o/Ec1OQQNpUz+7uPiOZEUtla3NrEoyfpydKevgrdWX5FuxO2PJQBPbcKEuVXQfilUz+K9fSIUZT7Fvty9/SVFW8QCeoH7CI6+BXgKcyP4jVLuYaEe2WBT0RZy2MEeYJ8LLXp7viXr7SLoZpfp9PUd79maK1BUj+E9nI2TCqcdDRF35OLaq4iZGe314oltKhLWb0MrYFlu4whFHoofKYLzJEHeDv42GLlogAJX1y3nWNJi1/SBOzzd2lrrpBpcUKw9QPfW3V9aiShKi3wV+xcpFFM9yWBGc8sMac52E/tV2f8O+eHubFnyZaZB2ROa/ZX5okD2aljbGtjHXh+jIVwfTWUrjL0B6QhKjyxAUdOVZ3owYbJTmWVwsI2o4rHMkp8c4WaJURhYxS437T5aPLBB6PH2KJkv9hp0pMTLNpotLL82Mdc6jsWq+nzTJoaMwXOCuhYXNZo1sMkYY2TwB5JzthxaZXi/f6RUhvQBsuYI6G0af3bvDS8pDLM8NirCJ7KVwp4Goe4dIh6Ovq2UuVrktR8OlXXDnfCtshAiSbKlQyxpZn+zA77TNudRnZZNOwij0njps2ToaPq8VIS9zUl5P0d1kgQhxKzipTMFYtd8h0c="
+
+jobs:
+  include:
+    - stage: build docker image
+      if: |
+        commit_message =~ /^Build docker:*/
+      script: |
+        SW_NAME=`echo ${TRAVIS_REPO_SLUG##*/} | sed 's/ *$//g'`
+        DOCKER_SW_NAME=${SW_NAME,,}
+        SW_TAG=${TRAVIS_COMMIT_MESSAGE#*"Build docker:"}
+        SW_TAG=`echo ${SW_TAG%%,*} | sed 's/ *$//g'`
+        DOCKERFILEPATH=$(find . -name "${SW_TAG}.dockerfile")
+
+        IMAGE_NAME="${DOCKER_ORG}/${DOCKER_SW_NAME}:${SW_TAG}"
+
+        docker login -u "$DOCKER_USER" -p "$DOCKER_PASS"
+
+        docker pull ${IMAGE_NAME} || true
+
+        cd ${DOCKERFILEPATH}
+
+        docker build\
+          --label "BUILT-BY=Travis"\
+          --label "BUILT-FROM=${TRAVIS_REPO_SLUG}"\
+          --label "BUILD-LOG=${TRAVIS_BUILD_WEB_URL}"\
+          --tag ${IMAGE_NAME}\
+          -f ./${SW_TAG}.dockerfile\
+          .
+
+        docker images
+
+        docker push ${IMAGE_NAME}
