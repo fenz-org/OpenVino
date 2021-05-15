@@ -1,5 +1,5 @@
 Bootstrap: docker
-From: provarepro/openvino:2019_gpu_deps
+From: provarepro/openvino:openvino:2019_cg_deps-ubuntu18
 
 %post
     git clone \
@@ -17,7 +17,7 @@ From: provarepro/openvino:2019_gpu_deps
     mkdir build && cd build && \
     cmake \
         -DCMAKE_BUILD_TYPE=Release \
-        -DTHREADING=TBB \
+        -DTHREADING=OMP \
         -DENABLE_DLIA=OFF \
         -DENABLE_VPU=OFF \
         -DENABPP=OFF \
