@@ -34,4 +34,4 @@ RUN git clone \
         .. && \
     make --jobs=$(nproc --all)
 
-ENV LD_LIBRARY_PATH="/openvino/inference-engine/temp/omp/lib/:/opt/opencv/lib:/openvino/inference-engine/bin/intel64/Release/lib"
+ENV LD_LIBRARY_PATH="/opt/opencv/lib:/openvino/inference-engine/bin/intel64/Release/lib"
