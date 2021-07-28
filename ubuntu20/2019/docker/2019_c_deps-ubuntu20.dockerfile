@@ -16,7 +16,35 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         git \
         cmake \
-        build-essential \
+        make \
+        dirmngr \
+        dpkg-dev \
+        fakeroot \
+        gcc-7 \
+        g++-7 \
+        gnupg \
+        gnupg-l10n \
+        gnupg-utils \
+        gpg \
+        gpg-agent \
+        gpg-wks-client \
+        gpg-wks-server \
+        gpgconf \
+        gpgsm \
+        libalgorithm-diff-perl \
+        libalgorithm-diff-xs-perl \
+        libalgorithm-merge-perl \
+        libassuan0 \
+        libdpkg-perl \
+        libfakeroot \
+        libfile-fcntllock-perl \
+        libksba8 \
+        liblocale-gettext-perl \
+        libnpth0 \
+        libubsan1 \
+        patch \
+        pinentry-curses \
+        xz-utils \
         curl \
         unzip \
         ca-certificates \
@@ -26,7 +54,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-RUN cd /usr/bin/ && \
+RUN update-alternatives \
+        --install /usr/bin/gcc gcc /usr/bin/gcc-7 70 \
+        --slave /usr/bin/g++ g++ /usr/bin/g++-7 \
+        --slave /usr/bin/gcov gcov /usr/bin/gcov-7 && \
+    cd /usr/bin/ && \
     ln -s python3 python && \
     cd / && \
     curl https://bootstrap.pypa.io/get-pip.py -o /get-pip.py && \
