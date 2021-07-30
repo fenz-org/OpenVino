@@ -12,7 +12,6 @@ RUN git clone \
         https://github.com/openvinotoolkit/openvino.git && \
     cd /openvino && \
     git submodule update --init --recursive && \
-    cd inference-engine && \
     ./install_dependencies.sh && \
     cd /usr/bin/ && rm python && \
     ln -s python3 python && \
