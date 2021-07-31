@@ -53,6 +53,6 @@ RUN curl -LO https://github.com/opencv/opencv/archive/${OPENCV_VERSION}.zip && \
         .. && \
     cmake --build . && make install && \
     cd / && \
-    rf -rf /opencv-${OPENCV_VERSION}
+    rm -rf /opencv-${OPENCV_VERSION}
 
 ENV OpenCV_DIR=/opt/opencv/lib/cmake/opencv4
