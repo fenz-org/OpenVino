@@ -9,6 +9,8 @@ ARG MKL_ROOTPATH=/opt/mkl
 
 ADD https://github.com/intel/mkl-dnn/releases/download/v0.19/mklml_lnx_2019.0.5.20190502.tgz ${MKL_ROOTPATH}
 
+RUN ls -la ${MKL_ROOTPATH}
+
 RUN git clone \
         --depth 1 \
         --single-branch \
