@@ -7,9 +7,10 @@ SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
 ARG MKL_ROOTPATH=/opt/mkl
 
-ADD https://github.com/intel/mkl-dnn/releases/download/v0.19/mklml_lnx_2019.0.5.20190502.tgz ${MKL_ROOTPATH}
-
-RUN ls -la ${MKL_ROOTPATH}
+RUN curl -LO https://github.com/intel/mkl-dnn/releases/download/v0.19/mklml_lnx_2019.0.5.20190502.tgz && \
+    mkdir -p ${MKL_ROOTPATH} && \
+    tar -xf mklml_lnx_2019.0.5.20190502.tgz -C ${MKL_ROOTPATH} --strip-components=1 && \
+    rm mklml_lnx_2019.0.5.20190502.tgz
 
 RUN git clone \
         --depth 1 \
