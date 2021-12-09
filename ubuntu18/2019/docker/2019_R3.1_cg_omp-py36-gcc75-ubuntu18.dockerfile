@@ -35,15 +35,17 @@ RUN git clone \
         -DENABLE_MKL_DNN=ON \
         -DENABLE_OPENCV=OFF \
         .. && \
-    make --jobs=$(nproc --all)
+    make --jobs=$(nproc --all) && \
+    sed -i '/<plugins>/a \        <plugin name="MULTI" location="libMultiDevicePlugin.so">\n        </plugin>' \
+           /openvino/inference-engine/bin/intel64/Release/lib/plugins.xml
 
 COPY --from=runtime \
          /opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/libMultiDevicePlugin.so \
          /openvino/inference-engine/bin/intel64/Release/lib/libMultiDevicePlugin.so
 
-#Manually add MULTI plugin if was missing
-RUN grep -qF '<plugin name="MULTI" location="libMultiDevicePlugin.soa">' plugins.xml || \
-        sed -i '/<plugins>/a \        <plugin name="MULTI" location="libMultiDevicePlugin.so">\n        </plugin>' plugins.xml
+##Manually add MULTI plugin if was missing
+#RUN grep -qF '<plugin name="MULTI" location="libMultiDevicePlugin.so">' /openvino/inference-engine/bin/intel64/Release/lib/plugins.xml || \
+#        sed -i '/<plugins>/a \        <plugin name="MULTI" location="libMultiDevicePlugin.so">\n        </plugin>' /openvino/inference-engine/bin/intel64/Release/lib/plugins.xml
 
 ENV LD_LIBRARY_PATH="/openvino/inference-engine/temp/omp/lib/:/opt/opencv/lib:/openvino/inference-engine/bin/intel64/Release/lib" \
     InferenceEngine_DIR=/openvino/inference-engine/build
