@@ -1,3 +1,7 @@
+ARG OV_VER="2019_R3.1"
+ARG BASEOS_VER="ubuntu18"
+FROM openvino/${BASEOS_VER}_runtime:${OV_VER} as runtime
+
 ARG BASE_IMAGE=provarepro/openvino:2019_cg_deps-ubuntu18
 FROM ${BASE_IMAGE}
 
@@ -33,6 +37,14 @@ RUN git clone \
         -DENABLE_OPENCV=OFF \
         .. && \
     make --jobs=$(nproc --all)
+
+COPY --from=runtime \
+         /opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/libMultiDevicePlugin.so \
+         /openvino/inference-engine/bin/intel64/Release/lib/libMultiDevicePlugin.so
+
+#Manually add MULTI plugin if was missing
+RUN grep -qF '<plugin name="MULTI" location="libMultiDevicePlugin.soa">' plugins.xml || \
+        sed -i '/<plugins>/a \        <plugin name="MULTI" location="libMultiDevicePlugin.so">\n        </plugin>' plugins.xml
 
 ENV LD_LIBRARY_PATH="/openvino/inference-engine/temp/omp/lib/:/opt/opencv/lib:/openvino/inference-engine/bin/intel64/Release/lib" \
     InferenceEngine_DIR=/openvino/inference-engine/build
