@@ -33,3 +33,4 @@ From: provarepro/openvino:2019_cg_deps-ubuntu18
 
 %environment
     export LD_LIBRARY_PATH="/openvino/inference-engine/temp/omp/lib/:/opt/opencv/lib:/openvino/inference-engine/bin/intel64/Release/lib"
+    export InferenceEngine_DIR="/openvino/inference-engine/build"
