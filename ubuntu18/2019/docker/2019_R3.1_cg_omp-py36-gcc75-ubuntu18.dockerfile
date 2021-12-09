@@ -2,8 +2,7 @@ ARG OV_VER="2019_R3.1"
 ARG BASEOS_VER="ubuntu18"
 FROM openvino/${BASEOS_VER}_runtime:${OV_VER} as runtime
 
-ARG BASE_IMAGE=provarepro/openvino:2019_cg_deps-ubuntu18
-FROM ${BASE_IMAGE}
+FROM provarepro/openvino:2019_cg_deps-ubuntu18
 
 USER root
 
