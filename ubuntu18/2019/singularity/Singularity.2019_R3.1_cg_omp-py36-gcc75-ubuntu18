@@ -6,7 +6,7 @@ Bootstrap: docker
 From: provarepro/openvino:2019_cg_deps-ubuntu18
 
 %files from runtime
-    /opt/intel/openvino/deployment_tools/inference_engine/lib/intel64/libMultiDevicePlugin.so /tmp/libMultiDevicePlugin.so
+    /opt/intel/openvino_2019.3.376/deployment_tools/inference_engine/lib/intel64/libMultiDevicePlugin.so /libMultiDevicePlugin.so
 
 %post
     git clone \
@@ -37,7 +37,8 @@ From: provarepro/openvino:2019_cg_deps-ubuntu18
         -DENABLE_OPENCV=OFF \
         .. && \
     make --jobs=$(nproc --all) && \
-    cp /tmp/libMultiDevicePlugin.so /openvino/inference-engine/bin/intel64/Release/lib/libMultiDevicePlugin.so && \
+    cp /libMultiDevicePlugin.so /openvino/inference-engine/bin/intel64/Release/lib/libMultiDevicePlugin.so && \
+    rm /libMultiDevicePlugin.so && \
     sed -i '/<plugins>/a \        <plugin name="MULTI" location="libMultiDevicePlugin.so">\n        </plugin>' \
            /openvino/inference-engine/bin/intel64/Release/lib/plugins.xml
 
