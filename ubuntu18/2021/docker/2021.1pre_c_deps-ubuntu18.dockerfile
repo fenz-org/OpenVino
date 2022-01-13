@@ -39,7 +39,7 @@ RUN git clone \
 RUN apt-get purge -y cmake && \
     rm -rf /var/lib/apt/lists/*
 
-RUN cd /usr/bin/ && \
+RUN cd /usr/bin/ && rm python && \
     ln -s python3 python && \
     cd / && \
     curl https://bootstrap.pypa.io/get-pip.py -o /get-pip.py && \
