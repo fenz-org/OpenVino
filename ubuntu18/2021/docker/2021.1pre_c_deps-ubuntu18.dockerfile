@@ -60,6 +60,7 @@ RUN cd /usr/bin/ && rm python && \
         -DPYTHON3_INCLUDE_DIR=/usr/include/python${PYTHON_VERSION} \
         -DCMAKE_INSTALL_PREFIX=/opt/opencv \
         .. && \
-    cmake --build . && make install
+    cmake --build . && make install && \
+    rm -rf /opencv-${OPENCV_VERSION}
 
 ENV OpenCV_DIR=/opt/opencv/lib/cmake/opencv4
