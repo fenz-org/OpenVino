@@ -1,4 +1,4 @@
-ARG BASE_IMAGE=provarepro/2021.2_c_deps-ubuntu20
+ARG BASE_IMAGE=provarepro/openvino:2021.2_c_deps-ubuntu20
 FROM ${BASE_IMAGE}
 
 USER root
