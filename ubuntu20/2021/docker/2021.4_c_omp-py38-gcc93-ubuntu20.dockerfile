@@ -33,8 +33,11 @@ RUN git clone \
     export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:${OPENCV_DIRS[0]}/opencv/lib && \
     make --jobs=$(nproc --all)
 
-ENV LD_LIBRARY_PATH="/openvino/inference-engine/temp/omp/lib/:/openvino/inference-engine/temp/opencv_4.5.2_ubuntu20/opencv/lib:/openvino/bin/intel64/Release/lib" \
-    InferenceEngine_DIR=/openvino/build
+ENV OpenCV_PATH="/openvino/inference-engine/temp/opencv_4.5.2_ubuntu20/opencv"
+
+ENV LD_LIBRARY_PATH="/openvino/inference-engine/temp/omp/lib/:${OpenCV_PATH}/lib:/openvino/bin/intel64/Release/lib" \
+    InferenceEngine_DIR=/openvino/build \
+    OpenCV_DIR="${OpenCV_PATH}/cmake"
 
 # Creating user openvino
 RUN useradd -ms /bin/bash -G users openvino && \
