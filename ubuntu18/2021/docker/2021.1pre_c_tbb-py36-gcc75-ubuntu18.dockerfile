@@ -1,9 +1,8 @@
 ARG BASE_IMAGE=provarepro/openvino:2021.1pre_c_deps-ubuntu18
 FROM ${BASE_IMAGE}
 
-USER root
-
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
+USER root
 
 RUN cd /openvino && \
     mkdir build && cd build && \
@@ -24,9 +23,8 @@ RUN cd /openvino && \
         .. && \
     make --jobs=$(nproc --all)
 
-
 ENV LD_LIBRARY_PATH="/opt/opencv/lib:/openvino/bin/intel64/Release/lib" \
-    InferenceEngine_DIR=/openvino/build
+    InferenceEngine_DIR="/openvino/build"
 
 # Creating user openvino
 RUN useradd -ms /bin/bash -G users openvino && \

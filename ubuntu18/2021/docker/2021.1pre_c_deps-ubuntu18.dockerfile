@@ -1,14 +1,13 @@
 ARG BASE_IMAGE=ubuntu:18.04
 FROM ${BASE_IMAGE}
 
+SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 USER root
 
-SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
-
-ENV DEBIAN_FRONTEND=noninteractive \
-    LC_ALL=C.UTF-8 \
-    LANG=C.UTF-8 \
-    LANGUAGE=C.UTF-8 \
+ENV DEBIAN_FRONTEND="noninteractive" \
+    LC_ALL="C.UTF-8" \
+    LANG="C.UTF-8" \
+    LANGUAGE="C.UTF-8" \
     OPENCV_VERSION="4.1.2" \
     CMAKE_VERSION="3.17.2" \
     PYTHON_VERSION="3.6"
@@ -63,4 +62,4 @@ RUN cd /usr/bin/ && rm python && \
     cmake --build . && make install && \
     rm -rf /opencv-${OPENCV_VERSION}
 
-ENV OpenCV_DIR=/opt/opencv/lib/cmake/opencv4
+ENV OpenCV_DIR="/opt/opencv/lib/cmake/opencv4"
