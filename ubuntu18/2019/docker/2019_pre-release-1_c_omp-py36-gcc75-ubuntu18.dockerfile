@@ -6,7 +6,7 @@ USER root
 SHELL ["/bin/bash", "-xo", "pipefail", "-c"]
 
 RUN git clone \
-        --depth 1 \
+        --depth 2 \
         --single-branch \
         -b releases/2019/pre-release \
         https://github.com/openvinotoolkit/openvino.git && \
