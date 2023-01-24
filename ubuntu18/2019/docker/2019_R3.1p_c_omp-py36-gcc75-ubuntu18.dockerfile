@@ -11,8 +11,8 @@ RUN git clone \
         -b 2019_R3.1 \
         https://github.com/openvinotoolkit/openvino.git && \
     cd /openvino && \
-    wget https://raw.githubusercontent.com/openvinotoolkit/openvino/releases/2019/pre-release/inference-engine/src/inference_engine/cnn_network_int8_normalizer.cpp \
-        -O inference-engine/src/inference_engine/cnn_network_int8_normalizer.cpp && \
+    curl https://raw.githubusercontent.com/openvinotoolkit/openvino/releases/2019/pre-release/inference-engine/src/inference_engine/cnn_network_int8_normalizer.cpp \
+        -o inference-engine/src/inference_engine/cnn_network_int8_normalizer.cpp && \
     git submodule update --init --recursive && \
     cd inference-engine && \
     ./install_dependencies.sh && \
